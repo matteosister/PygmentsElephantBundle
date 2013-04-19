@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="cypress.pygments_elephant.pygmentize_binary.class">Cypress\PygmentsElephantBundle\PygmentsElephant\PygmentizeBinary</parameter>
+        <parameter key="cypress.pygments_elephant.pygmentize.class">Cypress\PygmentsElephantBundle\PygmentsElephant\Pygmentize</parameter>
+    </parameters>
+
+    <services>
+        <service id="cypress.pygments_elephant.pygmentize_binary" class="%cypress.pygments_elephant.pygmentize_binary.class%">
+            <argument>%cypress_pygments_elephant.file_types%</argument>
+        </service>
+
+        <service id="cypress.pygments_elephant.pygmentize" class="%cypress.pygments_elephant.pygmentize.class%">
+            <argument type="service" id="cypress.pygments_elephant.pygmentize_binary" />
+        </service>
+
+        <service id="cypress.pygments_elephant.routing_loader" class="Cypress\PygmentsElephantBundle\Routing\CssRoutingLoader">
+            <tag name="routing.loader" />
+        </service>
+    </services>
+</container>

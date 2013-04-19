@@ -1,0 +1,22 @@
+{
+    "name": "cypresslab/pygments-elephant-bundle",
+    "type": "symfony-bundle",
+    "description": "Pygmentize bundle for Symfony2",
+    "keywords": ["pygments"],
+    "homepage": "https://github.com/matteosister/PygmentsElephantBundle",
+    "version": "0.1",
+    "license": "GPL3",
+    "authors": [
+        {
+            "name": "Matteo Giachino",
+            "email": "matteog@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-0": { "Cypress\\PygmentsElephantBundle": "" }
+    },
+    "target-dir": "Cypress/PygmentsElephantBundle"
+}
