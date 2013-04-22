@@ -4,10 +4,10 @@ Symfony2 bundle for Pygments
 
 ##Requirements
 
-symfony2
-pygments on your command line
+* symfony2
+* [pygments](http://pygments.org/) on your command line
 
-on linux you can do
+to install pygments on linux you can do
 
 ```bash
 $ easy_install pygments
