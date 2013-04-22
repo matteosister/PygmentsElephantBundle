@@ -16,4 +16,4 @@ $ easy_install pygments
 ##Install
 
 ```bash
-composer require cypresslab/
+composer require cypresslab/pygments-elephant-bundle 0.*
