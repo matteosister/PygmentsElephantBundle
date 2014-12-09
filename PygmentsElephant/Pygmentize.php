@@ -9,8 +9,8 @@
 
 namespace Cypress\PygmentsElephantBundle\PygmentsElephant;
 
-use Cypress\PygmentsElephantBundle\PygmentsElephant\PygmentizeBinary;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Pygmentize wrapper
@@ -43,26 +43,33 @@ class Pygmentize
     private $fs;
 
     /**
+     * @var array
+     */
+    private $options;
+
+    /**
      * Class constructor
      *
      * @param PygmentizeBinary $binary binary
+     * @param array $options
      */
-    public function __construct(PygmentizeBinary $binary)
+    public function __construct(PygmentizeBinary $binary, $options = array())
     {
-        $this->binary = $binary;
         $this->fs = new Filesystem();
+        $this->binary = $binary;
+        $this->options = $options;
     }
 
     /**
      * format a file by its name
      *
      * @param string $filename file name
-     * @param string $lexer    lexer
+     * @param string $lexer lexer
+     * @param array $options
      *
      * @return string
-     * @throws \InvalidArgumentException
      */
-    public function formatFile($filename, $lexer = null)
+    public function formatFile($filename, $lexer = null, array $options = array())
     {
         if (!$this->fs->exists($filename)) {
             throw new \InvalidArgumentException(sprintf('the file %s doesn\'t exists', $filename));
@@ -71,7 +78,7 @@ class Pygmentize
         $this->lexer = null === $lexer ? $this->binary->guessLexer($filename) : $lexer;
         $this->format = 'html';
 
-        return $this->binary->execute($this);
+        return $this->binary->execute($this, array_merge($this->options, $options));
     }
 
     /**

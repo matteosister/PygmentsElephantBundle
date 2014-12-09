@@ -10,7 +10,6 @@
 namespace Cypress\PygmentsElephantBundle\PygmentsElephant;
 
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Pygmentize binary wrapper
@@ -66,15 +65,34 @@ class PygmentizeBinary
      * execute a call to pygmentize binary
      *
      * @param Pygmentize $pygmentize
+     * @param array $options
      *
      * @return string
-     * @throws \RuntimeException
      */
-    public function execute(Pygmentize $pygmentize)
+    public function execute(Pygmentize $pygmentize, array $options)
     {
-        $cmd = sprintf('-f %s -l %s -O encoding=%s %s', $pygmentize->getFormat(), $pygmentize->getLexer(), mb_detect_encoding(file_get_contents($pygmentize->getSubject())), $pygmentize->getSubject());
+        $cmd = sprintf('-f %s -l %s -O encoding=%s %s %s',
+            $pygmentize->getFormat(),
+            $pygmentize->getLexer(),
+            mb_detect_encoding(file_get_contents($pygmentize->getSubject())),
+            $this->generateOptions($options),
+            $pygmentize->getSubject()
+        );
 
         return $this->executeCommand($cmd);
+    }
+
+    /**
+     * @param array $options
+     * @return string
+     */
+    private function generateOptions(array $options)
+    {
+        $output = '';
+        foreach ($options as $name => $value) {
+            $output .= sprintf(' -P %s=%s', $name, $value);
+        }
+        return $output;
     }
 
     /**
